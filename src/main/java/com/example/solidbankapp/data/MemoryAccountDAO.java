@@ -1,16 +1,16 @@
-package com.example.solidbankapp.domain.data;
+package com.example.solidbankapp.data;
 
 import com.example.solidbankapp.domain.model.Account;
 import com.example.solidbankapp.domain.model.AccountType;
-import com.example.solidbankapp.domain.model.AccountWithDraw;
+import com.example.solidbankapp.domain.model.AccountWithdraw;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.stream.IntStream;
 
 public class MemoryAccountDAO implements AccountDAO {
 
-    private List<Account> accountList;
+    private final List<Account> accountList = new ArrayList<>();
 
     @Override
     public List<Account> getClientAccount(String clientId) {
@@ -37,10 +37,10 @@ public class MemoryAccountDAO implements AccountDAO {
     }
 
     @Override
-    public AccountWithDraw getClientWithdrawAccount(String clientId, String accountId) {
+    public AccountWithdraw getClientWithdrawAccount(String clientId, String accountId) {
         return accountList.stream()
-                .filter(account -> account instanceof AccountWithDraw)
-                .map(account -> (AccountWithDraw) account)
+                .filter(account -> account instanceof AccountWithdraw)
+                .map(account -> (AccountWithdraw) account)
                 .filter(account -> account.getClientId().equals(clientId) &&
                         account.getAccountId().equals(accountId))
                 .findFirst()

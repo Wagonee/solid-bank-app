@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <bean id="memoryAccountDAO" class="com.example.solidbankapp.data.MemoryAccountDAO"/>
+
+    <bean id="accountCreationService" class="com.example.solidbankapp.service.AccountCreationServiceImpl">
+        <constructor-arg ref="memoryAccountDAO"/>
+    </bean>
+
+    <bean id="myCLI" class="com.example.solidbankapp.ui.MyCLI">
+        <constructor-arg ref="scanner"/>
+    </bean>
+
+    <bean id="bankCore" class="com.example.solidbankapp.core.BankCore">
+        <constructor-arg ref="accountCreationService"/>
+    </bean>
+
+    <bean id="scanner" class="java.util.Scanner">
+        <constructor-arg value="#{T(java.lang.System).in}"/>
+    </bean>
+
+
+    <bean id="accountListingService" class="com.example.solidbankapp.service.AccountListingServiceImpl">
+        <constructor-arg ref="memoryAccountDAO"/>
+    </bean>
+
+    <bean id="accountBasicCLI" class="com.example.solidbankapp.ui.AccountBasicCLI">
+        <constructor-arg index="0" ref="myCLI"/>
+        <constructor-arg index="1" ref="bankCore"/>
+        <constructor-arg index="2" ref="accountListingService"/>
+    </bean>
+
+</beans>
